@@ -33,7 +33,7 @@ app.get("/api/:date?", (req, res) => {
   console.log(inputDate);
   let timeStamp = inputDate.getTime();
   // change to format "Thu, 01 Jan 1970 00:00:00 GMT"
-  let formattedTime = dateFormat(inputDate, "ddd, dd mmm yyyy HH:MM:ss Z")
+  let formattedTime = inputDate.toUTCString();
   res.json({ unix : timeStamp, UTC : formattedTime});
 
 
