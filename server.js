@@ -29,7 +29,7 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date?", (req, res) => {
   let inputDate = new Date(req.params.date);
-  if (!inputDate) return res.json({ error : "Invalid Date" });
+  if (inputDate == "Invalid Date") return res.json({ error : "Invalid Date" });
   console.log(inputDate);
   let timeStamp = inputDate.getTime();
   // change to format "Thu, 01 Jan 1970 00:00:00 GMT"
