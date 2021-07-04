@@ -27,8 +27,14 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", (req, res) => {
+  let inputDate = new Date(req.params.date);
+  if (!inputDate) return res.json({ error : "Invalid Date" });
+  console.log(inputDate);
+  if (!inputDate) return res.json({ error : "Invalid Date" });
+  let timeStamp = inputDate.getTime();
+  res.json({ unix : timeStamp });
 
-  res.json({ error : "Invalid Date" });
+
 });
 
 // listen for requests :)
