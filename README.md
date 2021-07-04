@@ -1,6 +1,6 @@
 The final projects for the freeCodeCamp "APIs and Microservices" course
 
-# [Info on Project 1 - Timestamp](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/timestamp-microservice)
+[Info on Project 1 - Timestamp](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/timestamp-microservice)
 
 # [Info on Project 2 - Request Header](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/request-header-parser-microservice)
 
