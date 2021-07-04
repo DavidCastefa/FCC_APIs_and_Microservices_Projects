@@ -28,12 +28,24 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", (req, res) => {
-  let inputDate = new Date(req.params.date);
-  if (inputDate == "Invalid Date") return res.json({ error : "Invalid Date" });
-  console.log(inputDate);
+  console.log("req.params.date ->", req.params.date);
+  let inputDate
+  if (req.params.date == undefined) {
+    inputDate = new Date()
+    console.log("inputDate blank ->", inputDate);
+  } else {
+    inputDate = new Date(req.params.date)
+    console.log("inputDate not blank ->", inputDate);
+  };
+  console.log("inputDate defined?", inputDate);
+  if (inputDate == "Invalid Date") {
+    return res.json({ error : "Invalid Date" })
+  };
+
   let timeStamp = inputDate.getTime();
-  // change to format "Thu, 01 Jan 1970 00:00:00 GMT"
+  // change time format to "Thu, 01 Jan 1970 00:00:00 GMT"
   let formattedTime = inputDate.toUTCString();
+
   res.json({ unix : timeStamp, utc : formattedTime});
 
 
