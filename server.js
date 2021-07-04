@@ -4,6 +4,7 @@
 // init project
 var express = require('express');
 var app = express();
+var dateFormat = require("dateformat");
 var port = process.env.PORT || 3000;
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
@@ -30,9 +31,10 @@ app.get("/api/:date?", (req, res) => {
   let inputDate = new Date(req.params.date);
   if (!inputDate) return res.json({ error : "Invalid Date" });
   console.log(inputDate);
-  if (!inputDate) return res.json({ error : "Invalid Date" });
   let timeStamp = inputDate.getTime();
-  res.json({ unix : timeStamp });
+  // change to format "Thu, 01 Jan 1970 00:00:00 GMT"
+  let formattedTime = dateFormat(inputDate, "ddd, dd mmm yyyy HH:MM:ss Z")
+  res.json({ unix : timeStamp, UTC : formattedTime});
 
 
 });
