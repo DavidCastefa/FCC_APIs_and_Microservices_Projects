@@ -5,6 +5,7 @@
 var express = require('express');
 var app = express();
 var dateFormat = require("dateformat");
+// set the local port to 3000
 var port = process.env.PORT || 3000;
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
@@ -27,45 +28,37 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// Project 1: create timestamp Microservice
+// Some ideas from Useful Programmer walkthrough at
+// https://www.youtube.com/watch?v=R6Y0ewJ-ZIY
 app.get("/api/:date?", (req, res) => {
-  console.log("req.params.date ->", req.params.date);
-  console.log("typeof", typeof req.params.date);
-
   let inputDate  // declare variable to be used in if statements
-
   // check if date is blank
   if (req.params.date == undefined) {
     inputDate = new Date()
-    console.log("inputDate blank ->", inputDate);
   } else {
     inputDate = new Date(req.params.date)
-    console.log("inputDate not blank ->", inputDate);
   };
-
-  // check if date is unix timestamp
-  if (parseInt(req.params.date) > 10000 ) {    // If not unix, max would be the year 9999
+  // check if date is unix timestamp:
+  // if not unix, max value would be the year 9999
+  if (parseInt(req.params.date) > 10000 ) {
     inputDate = new Date(parseInt(req.params.date));
   };
-
   // check if date is valid
-  console.log("inputDate defined?", inputDate);
   if (inputDate == "Invalid Date") {
     return res.json({ error : "Invalid Date" })
   };
-
   // Change format to unix timestamp
   let timeStamp = inputDate.getTime();
-
   // change time format to "Thu, 01 Jan 1970 00:00:00 GMT"
   let formattedTime = inputDate.toUTCString();
-
   // display object with unix and utc keys
   res.json({ unix : timeStamp, utc : formattedTime});
-
 });
 
 // listen for requests :)
-// Original version: var listener = app.listen(process.env.PORT, function () {
+// Original version of next line:
+// var listener = app.listen(process.env.PORT, function () {
 var listener = app.listen(port, () => {
   console.log('Your app is listening on port ' + listener.address().port);
 });
