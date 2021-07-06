@@ -21,6 +21,12 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+// create route for Project 1 - Timestamp
+app.get("/timestamp", (req, res) => {
+  res.sendFile(__dirname + '/views/timestamp.html');
+});
+
+
 
 // your first API endpoint...
 app.get("/api/hello", function (req, res) {
