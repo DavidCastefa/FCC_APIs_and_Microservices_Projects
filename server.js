@@ -29,12 +29,12 @@ app.get("/timestamp", (req, res) => {
 });
 
 // create route for Project 2 - Header Parser
-app.get("/headerParser", (req, res) => {
-  res.sendFile(__dirname + '/views/headerparser.html');
+app.get("/headerparser", (req, res) => {
+  res.sendFile(__dirname + '/views/headerParser.html');
 });
 
 // create route for Project 3 - URL Shortener
-app.get("/urlShortener", (req, res) => {
+app.get("/urlshortener", (req, res) => {
   res.sendFile(__dirname + '/views/urlShortener.html');
 });
 
