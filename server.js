@@ -31,6 +31,10 @@ app.get("/headerparser", (req, res) => {
   res.sendFile(__dirname + '/views/headerparser.html');
 });
 
+// create route for Project 3 - URL Shortener
+app.get("/urlshortener", (req, res) => {
+  res.sendFile(__dirname + '/views/urlshortener.html');
+});
 
 // your first API endpoint...
 app.get("/api/hello", function (req, res) {
