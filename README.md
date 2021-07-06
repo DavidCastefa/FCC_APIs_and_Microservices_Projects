@@ -1,4 +1,4 @@
-The final projects for the freeCodeCamp "APIs and Microservices" course
+The certification projects for the freeCodeCamp "APIs and Microservices" course
 
 Projects on Heraku server [here](https://fcc-apis-projects-dkr.herokuapp.com/)
 
