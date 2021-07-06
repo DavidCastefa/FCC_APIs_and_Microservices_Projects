@@ -29,13 +29,13 @@ app.get("/timestamp", (req, res) => {
 });
 
 // create route for Project 2 - Header Parser
-app.get("/headerparser", (req, res) => {
+app.get("/headerParser", (req, res) => {
   res.sendFile(__dirname + '/views/headerparser.html');
 });
 
 // create route for Project 3 - URL Shortener
-app.get("/urlshortener", (req, res) => {
-  res.sendFile(__dirname + '/views/urlshortener.html');
+app.get("/urlShortener", (req, res) => {
+  res.sendFile(__dirname + '/views/urlShortener.html');
 });
 
 // your first API endpoint...
