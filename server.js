@@ -38,6 +38,19 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+
+// Project 2: Request Header Parser Microservice
+// Some ideas from Useful Programmer walkthrough at
+// https://www.youtube.com/watch?v=x9fdC9Ta6Hk
+app.get("/api/whoami", (req, res) => {
+  res.json({
+    ipaddress : req.ip,
+    language: req.headers["accept-language"],
+    software: req.headers["user-agent"],
+  });
+});
+
+
 // Project 1: create timestamp Microservice
 // Some ideas from Useful Programmer walkthrough at
 // https://www.youtube.com/watch?v=R6Y0ewJ-ZIY
@@ -67,14 +80,6 @@ app.get("/api/:date?", (req, res) => {
 });
 
 
-// Project 2: Request Header Parser Microservice
-// Some ideas from Useful Programmer walkthrough at
-// https://www.youtube.com/watch?v=x9fdC9Ta6Hk
-app.use("/api/whoami", (req, res, next) => {
-  res.json({ ipaddress : req.ip });
-  next();
-  }
-);
 
 
 // listen for requests :)
