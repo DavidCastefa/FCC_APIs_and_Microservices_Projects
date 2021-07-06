@@ -26,6 +26,10 @@ app.get("/timestamp", (req, res) => {
   res.sendFile(__dirname + '/views/timestamp.html');
 });
 
+// create route for Project 2 - Header Parser
+app.get("/headerparser", (req, res) => {
+  res.sendFile(__dirname + '/views/headerparser.html');
+});
 
 
 // your first API endpoint...
@@ -61,6 +65,17 @@ app.get("/api/:date?", (req, res) => {
   // display object with unix and utc keys
   res.json({ unix : timeStamp, utc : formattedTime});
 });
+
+
+// Project 2: Request Header Parser Microservice
+// Some ideas from Useful Programmer walkthrough at
+// https://www.youtube.com/watch?v=x9fdC9Ta6Hk
+app.use("/api/whoami", (req, res, next) => {
+  res.json({ ipaddress : req.ip });
+  next();
+  }
+);
+
 
 // listen for requests :)
 // Original version of next line:
