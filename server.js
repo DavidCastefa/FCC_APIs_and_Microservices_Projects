@@ -29,7 +29,11 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date?", (req, res) => {
   console.log("req.params.date ->", req.params.date);
-  let inputDate
+  console.log("typeof", typeof req.params.date);
+
+  let inputDate  // declare variable to be used in if statements
+
+  // check if date is blank
   if (req.params.date == undefined) {
     inputDate = new Date()
     console.log("inputDate blank ->", inputDate);
@@ -37,17 +41,26 @@ app.get("/api/:date?", (req, res) => {
     inputDate = new Date(req.params.date)
     console.log("inputDate not blank ->", inputDate);
   };
+
+  // check if date is unix timestamp
+  if (parseInt(req.params.date) > 10000 ) {    // If not unix, max would be the year 9999
+    inputDate = new Date(parseInt(req.params.date));
+  };
+
+  // check if date is valid
   console.log("inputDate defined?", inputDate);
   if (inputDate == "Invalid Date") {
     return res.json({ error : "Invalid Date" })
   };
 
+  // Change format to unix timestamp
   let timeStamp = inputDate.getTime();
+
   // change time format to "Thu, 01 Jan 1970 00:00:00 GMT"
   let formattedTime = inputDate.toUTCString();
 
+  // display object with unix and utc keys
   res.json({ unix : timeStamp, utc : formattedTime});
-
 
 });
 
