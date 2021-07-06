@@ -1,5 +1,7 @@
 // server.js
 // where your node app starts
+// main reference: Useful Programmer walkthrough at
+// https://www.youtube.com/playlist?list=PL3vpzVxKa3PiRLCMmR2FiuIJsSojZZgI8
 
 // init project
 var express = require('express');
@@ -42,10 +44,7 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-
 // Project 2: Request Header Parser Microservice
-// Some ideas from Useful Programmer walkthrough at
-// https://www.youtube.com/watch?v=x9fdC9Ta6Hk
 app.get("/api/whoami", (req, res) => {
   res.json({
     ipaddress : req.ip,
@@ -55,9 +54,8 @@ app.get("/api/whoami", (req, res) => {
 });
 
 
+
 // Project 1: create timestamp Microservice
-// Some ideas from Useful Programmer walkthrough at
-// https://www.youtube.com/watch?v=R6Y0ewJ-ZIY
 app.get("/api/:date?", (req, res) => {
   let inputDate  // declare variable to be used in if statements
   // check if date is blank
@@ -82,8 +80,6 @@ app.get("/api/:date?", (req, res) => {
   // display object with unix and utc keys
   res.json({ unix : timeStamp, utc : formattedTime});
 });
-
-
 
 
 // listen for requests :)
