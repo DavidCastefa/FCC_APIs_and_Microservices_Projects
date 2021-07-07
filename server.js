@@ -6,7 +6,8 @@
 // init project
 var express = require('express');
 var app = express();
-var dateFormat = require("dateformat");
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
 // set the local port to 3000
 var port = process.env.PORT || 3000;
 
@@ -53,9 +54,19 @@ app.get("/api/whoami", (req, res) => {
   });
 });
 
+// Project 3: URL Shortener Microservice
+app.get("/api/whoami", (req, res) => {
+  res.json({
+    ipaddress : req.ip,
+    language: req.headers["accept-language"],
+    software: req.headers["user-agent"],
+  });
+});
 
 
 // Project 1: create timestamp Microservice
+// Put this one last to avoid the "Invalid Date" message
+// when running the other projects
 app.get("/api/:date?", (req, res) => {
   let inputDate  // declare variable to be used in if statements
   // check if date is blank
