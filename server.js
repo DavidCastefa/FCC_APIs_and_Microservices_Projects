@@ -113,10 +113,7 @@ app.get("/api/shorturl/:shortUrl", (req, res) => {
     //res.redirect(urlFound.original_url);
   }); */
 
-
-  res.json({
-    smurf: "big smurf"
-  });
+  // res.json({ smurf: "big smurf" });
 });
 
 // Project 1: create timestamp Microservice
