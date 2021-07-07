@@ -71,6 +71,17 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 // post the form for the requested url
 app.post("/api/shorturl", urlencodedParser, (req, res) => {
   let originalUrl = req.body.url;
+  // if URL is invalid, return error
+  // https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  if (pattern.test(originalUrl) == false) {
+    return res.json({ error: 'invalid url' })
+  }
   // generate a random number between 10 and 999 for the shortened URL
   let shortUrl = Math.floor(Math.random() * (999 - 10 +1)) + 10;
   // save requested url into MongoDB
