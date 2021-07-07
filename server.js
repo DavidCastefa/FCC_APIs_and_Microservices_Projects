@@ -60,23 +60,19 @@ app.get("/api/whoami", (req, res) => {
 });
 
 // Project 3: URL Shortener Microservice
-
 // create Mongoose schema and model
 const urlSchema = new mongoose.Schema({
   original_url:  String,
   short_url:  Number,
 });
 let Url = mongoose.model('Url', urlSchema);
-// create application/json parser
-var jsonParser = bodyParser.json()
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-let shortUrl = 0
 // post the form for the requested url
 app.post("/api/shorturl", urlencodedParser, (req, res) => {
-  console.log("post request called");
   let originalUrl = req.body.url;
-  shortUrl++;
+  // generate a random number between 10 and 999 for the shortened URL
+  let shortUrl = Math.floor(Math.random() * (999 - 10 +1)) + 10;
   // save requested url into MongoDB
   let newUrl = new Url ({
     original_url: originalUrl,
@@ -84,7 +80,6 @@ app.post("/api/shorturl", urlencodedParser, (req, res) => {
   });
   newUrl.save( (err, data) => {
     if (err) return console.log(err);
-    console.log("newUrl successfully saved");
     // done(null, data) -> apparently this is not needed
   });
   // return JSON object as requested
@@ -93,27 +88,13 @@ app.post("/api/shorturl", urlencodedParser, (req, res) => {
     short_url : shortUrl
   });
 });
-
+// If shortened URL is used, redirect to original web page
 app.get("/api/shorturl/:shortUrl", (req, res) => {
-  console.log("req.params: " + req.params);
-  console.log("req.params.shortUrl: " + req.params.shortUrl);
   let requestedUrl = Url.findOne({short_url: req.params.shortUrl}, (err, urlFound) => {
     if (err) return console.log(err);
-    console.log("requestedUrl: " + requestedUrl);
-    console.log("urlFound: " + urlFound);
     console.log("Original URL: " + urlFound.original_url);
     res.redirect(urlFound.original_url);
-    //res.redirect(urlFound.original_url);
-    // done(null, urlFound)
   });
-  /* Url.find({short_url: req.params.shortUrl}).then(foundUrls => {
-    let urlFound = foundUrls[0];
-    console.log("urlFound: " + urlFound);
-    console.log("Original URL: " + urlFound.original_url);
-    //res.redirect(urlFound.original_url);
-  }); */
-
-  // res.json({ smurf: "big smurf" });
 });
 
 // Project 1: create timestamp Microservice
