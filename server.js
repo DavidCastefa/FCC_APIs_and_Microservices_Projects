@@ -114,27 +114,43 @@ app.get("/api/shorturl/:shortUrl", (req, res) => {
 
 // Project 4: Exercise Tracker
 // create Mongoose schema and model
-const excerciseUserSchema = new mongoose.Schema({
+const exerciseUserSchema = new mongoose.Schema({
   username:  String,
   exercises:  Object
 });
-let ExcerciseUser = mongoose.model('ExcerciseUser', excerciseUserSchema);
+let ExerciseUser = mongoose.model('ExerciseUser', exerciseUserSchema);
+// request POST of new user
 app.post("/api/users", urlencodedParser, (req, res) => {
-  console.log("Successful post request");
-  let newUser = new ExcerciseUser ({
+  console.log("Successful POST request");
+  // create new entry in MongoDB
+  let newUser = new ExerciseUser ({
     username: req.body.username
   });
   console.log("newUser: ", newUser);
+  // save new user in MongoDB
   newUser.save( (err, data) => {
     if (err) return console.log(err);
+    // return object with username and _id
     res.json({
       username : newUser.username,
       _id: newUser._id
     });
-    // done(null, data) -> apparently this is not needed
+  });
+});
+// request GET for an array of all users
+app.get("/api/users", (req, res) => {
+  console.log("Trying to get arrayOfUsers");
+  ExerciseUser.find((err, arrayOfUsers) => {
+    if (err) return console.log(err);
+    // done(null, personFound)
+    console.log("arrayOfUsers", arrayOfUsers);
+    res.json({
+      arrayOfUsers: arrayOfUsers
+    })
   });
 
 });
+
 
 // Project 1: create timestamp microservice
 // Put this one last to avoid the "Invalid Date" message
