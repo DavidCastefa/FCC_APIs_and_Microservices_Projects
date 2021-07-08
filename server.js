@@ -128,7 +128,6 @@ app.post("/api/users", urlencodedParser, (req, res) => {
   newUser.save( (err, data) => {
     if (err) return console.log(err);
     res.json({
-      saved: true,
       username : newUser.username,
       id: newUser._id
     });
