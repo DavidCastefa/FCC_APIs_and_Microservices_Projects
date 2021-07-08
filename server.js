@@ -129,7 +129,7 @@ app.post("/api/users", urlencodedParser, (req, res) => {
     if (err) return console.log(err);
     res.json({
       username : newUser.username,
-      id: newUser._id
+      _id: newUser._id
     });
     // done(null, data) -> apparently this is not needed
   });
