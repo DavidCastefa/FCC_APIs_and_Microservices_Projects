@@ -144,9 +144,7 @@ app.get("/api/users", (req, res) => {
     if (err) return console.log(err);
     // done(null, personFound)
     console.log("arrayOfUsers", arrayOfUsers);
-    res.json({
-      arrayOfUsers: arrayOfUsers
-    })
+    res.send(arrayOfUsers);
   });
 
 });
