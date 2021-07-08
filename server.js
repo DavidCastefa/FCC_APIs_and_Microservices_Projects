@@ -168,7 +168,7 @@ app.post("/api/users/:_id/exercises", urlencodedParser, (req, res) => {
         username: updatedPerson.username,
         description: req.body.description,
         duration: req.body.duration,
-        date: exerciseDate
+        date: new Date(exerciseDate).toDateString()
       });
     })
   })
