@@ -44,6 +44,11 @@ app.get("/urlshortener", (req, res) => {
   res.sendFile(__dirname + '/views/urlShortener.html');
 });
 
+// create route for Project 4 - Exercise Tracker
+app.get("/users", (req, res) => {
+  res.sendFile(__dirname + '/views/exerciseTracker.html');
+});
+
 // your first API endpoint...
 app.get("/api/hello", function (req, res) {
   console.log("greeting: 'hello API' ");
@@ -103,12 +108,36 @@ app.post("/api/shorturl", urlencodedParser, (req, res) => {
 app.get("/api/shorturl/:shortUrl", (req, res) => {
   let requestedUrl = Url.findOne({short_url: req.params.shortUrl}, (err, urlFound) => {
     if (err) return console.log(err);
-    console.log("Original URL: " + urlFound.original_url);
     res.redirect(urlFound.original_url);
   });
 });
 
-// Project 1: create timestamp Microservice
+// Project 4: Exercise Tracker
+// create Mongoose schema and model
+const excerciseUserSchema = new mongoose.Schema({
+  username:  String,
+  exercises:  Object
+});
+let ExcerciseUser = mongoose.model('ExcerciseUser', excerciseUserSchema);
+app.post("/api/users", urlencodedParser, (req, res) => {
+  console.log("Successful post request");
+  let newUser = new ExcerciseUser ({
+    username: req.body.username
+  });
+  console.log("newUser: ", newUser);
+  newUser.save( (err, data) => {
+    if (err) return console.log(err);
+    res.json({
+      saved: true,
+      username : newUser.username,
+      id: newUser._id
+    });
+    // done(null, data) -> apparently this is not needed
+  });
+
+});
+
+// Project 1: create timestamp microservice
 // Put this one last to avoid the "Invalid Date" message
 // when running the other projects
 app.get("/api/:date?", (req, res) => {

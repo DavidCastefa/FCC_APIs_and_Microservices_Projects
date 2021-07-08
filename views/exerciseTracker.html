@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Exercise Tracker | freeCodeCamp</title>
+    <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <!-- <link href="style.css" rel="stylesheet" type="text/css"> -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <h1>Exercise tracker</h1>
+          <form action="/api/users" method="post">
+            <h3>Create a New User</h3>
+            <p><code>POST /api/users</code></p>
+            <input id="uname" type="text" name="username" placeholder="username" class="form-control">
+            <input type="submit" value="Submit" class="btn btn-primary w-100 my-2">
+          </form>
+          <form id="exercise-form" method="post">
+            <h3>Add exercises</h3>
+            <p><code>POST /api/users/:_id/exercises</code></p>
+            <div class="form-group">
+              <input id="uid" type="text" name=":_id" placeholder=":_id" class="form-control">
+            </div>
+            <div class="form-group">
+              <input id="desc" type="text" name="description" placeholder="description*" class="form-control">
+            </div>
+            <div class="form-group">
+              <input id="dur" type="text" name="duration" placeholder="duration* (mins.)" class="form-control">
+            </div>
+            <div class="form-group">
+              <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd)" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Submit" class="btn btn-primary w-100 my-2">
+            </div>
+          </form>
+          <p>
+            <strong>GET user's exercise log: </strong>
+            <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
+          </p>
+          <p><strong>[ ]</strong> = optional</p>
+          <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
+          <p>
+            <small>
+              Back to main page: <a href="/">FCC APIs and Microservices Course Projects</a>
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const exerciseForm = document.getElementById("exercise-form");
+      exerciseForm.addEventListener("submit", () => {
+        const userId = document.getElementById("uid").value;
+        exerciseForm.action = `/api/users/${userId}/exercises`;
+        exerciseForm.submit();
+      });
+    </script>
+
+    <!-- Bootstrap JS with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
