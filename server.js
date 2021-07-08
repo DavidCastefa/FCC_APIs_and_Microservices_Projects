@@ -116,17 +116,15 @@ app.get("/api/shorturl/:shortUrl", (req, res) => {
 // create Mongoose schema and model
 const exerciseUserSchema = new mongoose.Schema({
   username:  String,
-  exercises:  Object
+  exercises:  [Object]
 });
 let ExerciseUser = mongoose.model('ExerciseUser', exerciseUserSchema);
 // request POST of new user
 app.post("/api/users", urlencodedParser, (req, res) => {
-  console.log("Successful POST request");
   // create new entry in MongoDB
   let newUser = new ExerciseUser ({
     username: req.body.username
   });
-  console.log("newUser: ", newUser);
   // save new user in MongoDB
   newUser.save( (err, data) => {
     if (err) return console.log(err);
@@ -139,16 +137,54 @@ app.post("/api/users", urlencodedParser, (req, res) => {
 });
 // request GET for an array of all users
 app.get("/api/users", (req, res) => {
-  console.log("Trying to get arrayOfUsers");
   ExerciseUser.find((err, arrayOfUsers) => {
     if (err) return console.log(err);
     // done(null, personFound)
-    console.log("arrayOfUsers", arrayOfUsers);
     res.send(arrayOfUsers);
   });
-
 });
-
+// request POST of new exercise
+app.post("/api/users/:_id/exercises", urlencodedParser, (req, res) => {
+  // find user and update to add excercise
+  console.log("req.params._id:", req.params._id);
+  console.log("req.body", req.body);
+  let exerciseDate = req.body.date;
+  if (exerciseDate == "") exerciseDate = new Date().toISOString().slice(0, 10);
+  let newExercise = {
+    description: req.body.description,
+    duration: req.body.duration,
+    date: exerciseDate
+  }
+  console.log("newExercise:", newExercise);
+  ExerciseUser.findById({_id: req.params._id}, (err, personFound) => {
+    if (err) return console.log(err);
+    personFound.exercises.push(newExercise);
+    personFound.save( (err, updatedPerson) => {
+      if (err) return console.log(err);
+      // done(null, updatedPerson)
+      console.log("User updated with new exercise");
+      res.json({
+        _id: updatedPerson._id,
+        username: updatedPerson.username,
+        description: req.body.description,
+        duration: req.body.duration,
+        date: exerciseDate
+      });
+    })
+  })
+  // let newUser = new ExerciseUser ({
+  //   username: req.body.username
+  // });
+  // // save new user in MongoDB
+  // newUser.save( (err, data) => {
+  //   if (err) return console.log(err);
+  //   // return object with username and _id
+  //   res.json({
+  //     username : newUser.username,
+  //     _id: newUser._id
+  //   });
+  // });
+});
 
 // Project 1: create timestamp microservice
 // Put this one last to avoid the "Invalid Date" message

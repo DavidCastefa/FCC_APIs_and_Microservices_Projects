@@ -23,7 +23,7 @@
             <input id="uname" type="text" name="username" placeholder="username" class="form-control">
             <input type="submit" value="Submit" class="btn btn-primary w-100 my-2">
           </form>
-          <form id="exercise-form" method="post">
+          <form id="exercise-form" action="/api/users/:_id/exercises" method="post">
             <h3>Add exercises</h3>
             <p><code>POST /api/users/:_id/exercises</code></p>
             <div class="form-group">
