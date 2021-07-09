@@ -219,13 +219,13 @@ app.get("/api/users/:_id/logs", (req, res) => {
 
 // Project 5: File Metadata Microservice
 // request POST of file
-app.post("/api/fileanalyse",
+app.post("/filemetadata/api/fileanalyse",
   //'upfile' from the form input in fileMetadata.html
   multer({ dest: 'uploadedFiles/' }).single('upfile'),
   (req, res) => {
-    console.log("req.file:", req.file);
-    console.log("Object.keys(req)", Object.keys(req));
-    console.log("req.url", req.url);
+    // console.log("req.file:", req.file);
+    // console.log("Object.keys(req)", Object.keys(req));
+    // console.log("req.url", req.url);
     res.json({
       name: req.file.originalname,
       type: req.file.mimetype,
