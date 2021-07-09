@@ -151,8 +151,8 @@ app.post("/api/users/:_id/exercises", urlencodedParser, (req, res) => {
   // save exercise as an object
   let newExercise = {
     description: req.body.description,
-    duration: req.body.duration,
-    date: exerciseDate
+    duration: parseInt(req.body.duration),  // required as a number to pass test
+    date: new Date(exerciseDate).toDateString(), // required format: Thu Jul 08 2021
   }
   // find user and add excercise
   ExerciseUser.findById({_id: req.params._id}, (err, personFound) => {
@@ -165,9 +165,9 @@ app.post("/api/users/:_id/exercises", urlencodedParser, (req, res) => {
       res.json({
         _id: updatedPerson._id,
         username: updatedPerson.username,
-        date: new Date(exerciseDate).toDateString(), // required format: Thu Jul 08 2021
-        duration: parseInt(req.body.duration),  // required as a number to pass test
-        description: req.body.description,
+        date: newExercise.date,
+        duration: newExercise.duration,
+        description: newExercise.description,
       });
     })
   })
