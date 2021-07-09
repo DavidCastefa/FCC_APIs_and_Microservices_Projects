@@ -9,6 +9,7 @@ var app = express();
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var multer  = require('multer');
 require('dotenv').config();
 
 // set the local port to 3000
@@ -216,7 +217,19 @@ app.get("/api/users/:_id/logs", (req, res) => {
   });
 });
 
-
+// Project 5: File Metadata Microservice
+// request POST of file
+app.post("/api/fileanalyse",
+  //'upfile' from the form input in fileMetadata.html
+  multer({ dest: 'uploadedFiles/' }).single('upfile'),
+  (req, res) => {
+    console.log("req.file:", req.file);
+    res.json({
+      name: req.file.originalname,
+      type: req.file.mimetype,
+      size: req.file.size,
+    });
+});
 
 // Project 1: create timestamp microservice
 // Put this one last to avoid the "Invalid Date" message
