@@ -173,14 +173,39 @@ app.post("/api/users/:_id/exercises", urlencodedParser, (req, res) => {
   })
 });
 // request GET to retrieve a full exercise log
+// some help here from Ganesh H at https://www.youtube.com/watch?v=ANfJ0oGL2Pk
 app.get("/api/users/:_id/logs", (req, res) => {
+  console.log("req.query:", req.query);
   ExerciseUser.findById({_id: req.params._id}, (err, personFound) => {
     if (err) return console.log(err);
+    let log = personFound.exercises;
+    // if there is a 'from' or 'to' in the query, filter for those dates
+    if ( req.query.from || req.query.to ) {
+      // set default 'from' to 0 and convert to unix timestamp
+      let dateFrom = new Date(0).getTime();
+      // set default 'to' to today and convert to unix
+      let dateTo = new Date().getTime();
+      // if applicable, get the 'from' date in the query and convert to unix
+      if (req.query.from) dateFrom = new Date(req.query.from).getTime();
+      // same for 'to' date
+      if (req.query.to) dateTo = new Date(req.query.to).getTime();
+      // filter for dates equal to or between requested dates
+      log = log.filter( session => {
+        let sessionDate = new Date(session.date).getTime();
+        return sessionDate >= dateFrom && sessionDate <= dateTo
+      });
+    }
+        // if there is a 'limit' in the query, slice off the rest of the exercises
+    console.log("req.query.limt:", req.query.limit);
+    if (req.query.limit) {
+      log = log.slice(0, req.query.limit)
+    };
+    // return object with user info, count and exercise logs
     res.json({
       _id: personFound._id,
       username: personFound.username,
-      count: personFound.exercises.length,
-      log: personFound.exercises
+      count: log.length,
+      log: log
     });
 
   });
