@@ -93,8 +93,8 @@ app.post("/api/shorturl", urlencodedParser, (req, res) => {
   if (pattern.test(originalUrl) == false) {
     return res.json({ error: 'invalid url' })
   }
-  // generate a random number between 10 and 999 for the shortened URL
-  let shortUrl = Math.floor(Math.random() * (999 - 10 +1)) + 10;
+  // generate a random number between 100 and 999 for the shortened URL
+  let shortUrl = Math.floor(Math.random() * (999 - 100 +1)) + 100;
   // save requested url into MongoDB
   let newUrl = new Url ({
     original_url: originalUrl,
@@ -219,13 +219,12 @@ app.get("/api/users/:_id/logs", (req, res) => {
 
 // Project 5: File Metadata Microservice
 // request POST of file
+// Note: to pass FCC tests, the form must be at the root of the app,
+//   in this case at https://fcc-apis-projects-dkr.herokuapp.com/filemetadata
 app.post("/filemetadata/api/fileanalyse",
   //'upfile' from the form input in fileMetadata.html
   multer({ dest: 'uploadedFiles/' }).single('upfile'),
   (req, res) => {
-    // console.log("req.file:", req.file);
-    // console.log("Object.keys(req)", Object.keys(req));
-    // console.log("req.url", req.url);
     res.json({
       name: req.file.originalname,
       type: req.file.mimetype,

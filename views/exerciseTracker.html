@@ -5,27 +5,27 @@
     <title>Exercise Tracker | freeCodeCamp</title>
     <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-    <!-- <link href="style.css" rel="stylesheet" type="text/css"> -->
+    <link href="style.css" rel="stylesheet" type="text/css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   </head>
 
-  <body>
-    <div class="container">
+  <body style="background-color: #dcf0fa;">
+    <div class="container mt-3">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <h1>Exercise tracker</h1>
-          <form action="/api/users" method="post">
+          <h1 class="mt-0">Exercise tracker</h1>
+          <form action="/api/users" method="post" style="border: 2px solid #000; background-color: #d7fcdd;" class="p-3">
             <h3>Create a New User</h3>
-            <p><code>POST /api/users</code></p>
-            <input id="uname" type="text" name="username" placeholder="username" class="form-control">
-            <input type="submit" value="Submit" class="btn btn-primary w-100 my-2">
+            <p><code style="color: rgb(56, 56, 56);">POST /api/users</code></p>
+            <input id="uname" type="text" name="username" placeholder="username" class="form-control my-2">
+            <input type="submit" value="Submit" class="btn btn-primary w-100">
           </form>
-          <form id="exercise-form" action="/api/users/:_id/exercises" method="post">
+          <form id="exercise-form" action="/api/users/:_id/exercises" method="post" style="border: 2px solid #000; background-color: #d7fcdd;" class="my-3 p-3">
             <h3>Add exercises</h3>
-            <p><code>POST /api/users/:_id/exercises</code></p>
+            <p><code style="color: rgb(56, 56, 56);">POST /api/users/:_id/exercises</code></p>
             <div class="form-group">
               <input id="uid" type="text" name=":_id" placeholder=":_id" class="form-control">
             </div>
@@ -42,16 +42,25 @@
               <input type="submit" value="Submit" class="btn btn-primary w-100 my-2">
             </div>
           </form>
-          <p>
+          <p class="my-2">
             <strong>GET user's exercise log: </strong>
-            <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
+            <code style="color: rgb(56, 56, 56);">GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
           </p>
-          <p><strong>[ ]</strong> = optional</p>
-          <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
-          <p>
+          <p class="my-2"><strong>[ ]</strong> = optional</p>
+          <p class="my-2"><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
+          <p class="my-2">
+            <small>
+              For example:<br>
+              [project_url]/api/users/60e80ccea7658997b4671aa7/logs?from=2010-12-01&to=2021-07-10&limit=5
+            </small>
+          </p>
+          <p class="my-4">
             <small>
               Back to main page: <a href="/">FCC APIs and Microservices Course Projects</a>
             </small>
+          </p>
+          <p class="my-4" id="signature">
+            <small><i>API by David Rhoton, 2021</i></small>
           </p>
         </div>
       </div>
