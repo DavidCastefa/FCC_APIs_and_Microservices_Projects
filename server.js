@@ -180,7 +180,7 @@ app.get("/api/users/:_id/logs", (req, res) => {
       _id: personFound._id,
       username: personFound.username,
       count: personFound.exercises.length,
-      logs: personFound.exercises
+      log: personFound.exercises
     });
 
   });
