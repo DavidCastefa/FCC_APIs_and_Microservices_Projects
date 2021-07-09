@@ -49,6 +49,11 @@ app.get("/users", (req, res) => {
   res.sendFile(__dirname + '/views/exerciseTracker.html');
 });
 
+// create route for Project 4 - Exercise Tracker
+app.get("/filemetadata", (req, res) => {
+  res.sendFile(__dirname + '/views/fileMetadata.html');
+});
+
 // your first API endpoint...
 app.get("/api/hello", function (req, res) {
   console.log("greeting: 'hello API' ");
