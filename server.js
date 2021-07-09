@@ -145,46 +145,48 @@ app.get("/api/users", (req, res) => {
 });
 // request POST of new exercise
 app.post("/api/users/:_id/exercises", urlencodedParser, (req, res) => {
-  // find user and update to add excercise
-  console.log("req.params._id:", req.params._id);
-  console.log("req.body", req.body);
+  // if date left blank, use today
   let exerciseDate = req.body.date;
   if (exerciseDate == "") exerciseDate = new Date().toISOString().slice(0, 10);
+  // save exercise as an object
   let newExercise = {
     description: req.body.description,
     duration: req.body.duration,
     date: exerciseDate
   }
-  console.log("newExercise:", newExercise);
+  // find user and add excercise
   ExerciseUser.findById({_id: req.params._id}, (err, personFound) => {
     if (err) return console.log(err);
-    personFound.exercises.push(newExercise);
+    personFound.exercises.push(newExercise);  // add object to the array
+    // save to MongoDB
     personFound.save( (err, updatedPerson) => {
       if (err) return console.log(err);
-      // done(null, updatedPerson)
-      console.log("User updated with new exercise");
+      // return object with user and new exercise info
       res.json({
         _id: updatedPerson._id,
         username: updatedPerson.username,
-        date: new Date(exerciseDate).toDateString(),
-        duration: parseInt(req.body.duration),
+        date: new Date(exerciseDate).toDateString(), // required format: Thu Jul 08 2021
+        duration: parseInt(req.body.duration),  // required as a number to pass test
         description: req.body.description,
       });
     })
   })
-  // let newUser = new ExerciseUser ({
-  //   username: req.body.username
-  // });
-  // // save new user in MongoDB
-  // newUser.save( (err, data) => {
-  //   if (err) return console.log(err);
-  //   // return object with username and _id
-  //   res.json({
-  //     username : newUser.username,
-  //     _id: newUser._id
-  //   });
-  // });
 });
+// request GET to retrieve a full exercise log
+app.get("/api/users/:_id/logs", (req, res) => {
+  ExerciseUser.findById({_id: req.params._id}, (err, personFound) => {
+    if (err) return console.log(err);
+    res.json({
+      _id: personFound._id,
+      username: personFound.username,
+      count: personFound.exercises.length,
+      logs: personFound.exercises
+    });
+
+  });
+});
+
+
 
 // Project 1: create timestamp microservice
 // Put this one last to avoid the "Invalid Date" message
