@@ -143,10 +143,12 @@ app.post("/api/users", urlencodedParser, (req, res) => {
 });
 // request GET for an array of all users
 app.get("/api/users", (req, res) => {
-  ExerciseUser.find((err, arrayOfUsers) => {
-    if (err) return console.log(err);
-    // done(null, personFound)
-    res.send(arrayOfUsers);
+  ExerciseUser.find()
+    .select('-exercises')  // remove the exercises from the result
+    .exec((err, arrayOfUsers) => {
+      if (err) return console.log(err);
+      // done(null, personFound)
+      res.send(arrayOfUsers);
   });
 });
 // request POST of new exercise
@@ -181,7 +183,6 @@ app.post("/api/users/:_id/exercises", urlencodedParser, (req, res) => {
 // request GET to retrieve a full exercise log
 // some help here from Ganesh H at https://www.youtube.com/watch?v=ANfJ0oGL2Pk
 app.get("/api/users/:_id/logs", (req, res) => {
-  console.log("req.query:", req.query);
   ExerciseUser.findById({_id: req.params._id}, (err, personFound) => {
     if (err) return console.log(err);
     let log = personFound.exercises;
@@ -202,7 +203,6 @@ app.get("/api/users/:_id/logs", (req, res) => {
       });
     }
         // if there is a 'limit' in the query, slice off the rest of the exercises
-    console.log("req.query.limt:", req.query.limit);
     if (req.query.limit) {
       log = log.slice(0, req.query.limit)
     };
