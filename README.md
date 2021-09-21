@@ -1,6 +1,6 @@
 The certification projects for the freeCodeCamp "APIs and Microservices" course
 
-Projects on Heraku server [here](https://fcc-apis-projects-dkr.herokuapp.com/)
+Projects on Heroku server [here](https://fcc-apis-projects-dkr.herokuapp.com/)
 
 [Info on Project 1: Timestamp](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/timestamp-microservice)
 
